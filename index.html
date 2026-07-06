@@ -5,13 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>XV Danna ✨</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 *{
   margin:0;
   padding:0;
   box-sizing:border-box;
+}
+
+.event-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 body{
@@ -328,7 +334,7 @@ canvas{
 /* ===== MAGIC COUNTDOWN LUXURY ORIGINAL ===== */
 .countdown{
     margin-top:55px;
-    padding:30px 45px;
+    padding:70px 45px;
     border-radius:30px;
     position:relative;
     overflow:hidden;
@@ -392,13 +398,14 @@ canvas{
     animation:borderMagic 8s linear infinite;
 }
 
-.countdown::after{
-    content:"✨";
-    position:absolute;
-    font-size:28px;
-    top:12px;
-    right:18px;
-    animation: sparkle 2s infinite;
+/* Ajuste para mantener la estrella arriba pero bien arrinconada a la derecha */
+.countdown::after {
+    content: "✨" !important;
+    font-size: 22px !important;
+    top: 8px !important;         /* Se queda arriba */
+    bottom: auto !important;     /* Cancela el ajuste de abajo */
+    right: 8px !important;       /* La pegamos lo más posible a la orilla derecha */
+    position: absolute !important;
 }
 
 @keyframes magicPulse{
@@ -592,7 +599,7 @@ h2{
     50%{ transform:translateY(-4px) scale(1.02); }
 }
 
-/* ===== CAPÍTULO IV: CÓDIGO DE COLORES REALES ===== */
+/* ===== CAPÍTULO V: CÓDIGO DE COLORES REALES ===== */
 .dress-code-box {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -634,25 +641,41 @@ h2{
   line-height: 1.6;
 }
 
-/* ===== GRID RECUERDOS ===== */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:15px;
+/* ===== GRID RECUERDOS REFINADO (SIMETRÍA PERFECTA) ===== */
+.grid {
+  display: grid;
+  /* Fuerza exactamente 3 columnas idénticas en computadoras */
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 20px;
+  max-width: 850px;
+  margin: 0 auto;
 }
 
-.grid img{
-  width:100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius:15px;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition:0.4s ease;
+.grid img {
+  width: 100%;
+  height: 280px; /* Altura estandarizada idéntica para las 6 fotos */
+  object-fit: cover; /* Recorta la imagen proporcionalmente sin deformarla */
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s cubic-bezier(0.2, 1, 0.2, 1), border-color 0.4s ease;
 }
 
-.grid img:hover{
-  transform:scale(1.06) rotate(1deg);
-  border-color: #facc15;
+.grid img:hover {
+  transform: scale(1.04) translateY(-4px);
+  border-color: #facc15; /* Ribete de oro al pasar el mouse */
+  box-shadow: 0 12px 25px rgba(250, 204, 21, 0.2);
+}
+
+/* Ajuste especial para que en celulares queden parejas de 2 en 2 en vez de 3 apretadas */
+@media (max-width: 650px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  .grid img {
+    height: 220px; /* Un poco más bajas en móvil para mantener proporción */
+  }
 }
 
 /* ===== FORM ===== */
@@ -763,33 +786,64 @@ button:hover{
     }
 }
 
-@media (max-width: 600px){
-    .countdown{
-        flex-direction:column;
-        gap:15px;
-        align-items:center;
-        padding: 20px;
+/* REEMPLAZA ESTA PARTE DENTRO DE @media (max-width: 600px) */
+@media (max-width: 600px) {
+    /* MANTENEMOS LA ESTRUCTURA HORIZONTAL COMPACTA */
+    .countdown {
+        display: flex !important;
+        flex-direction: row !important;   /* Forzamos el diseño horizontal */
+        justify-content: space-around !important; /* Distribuye los 4 bloques con espacios perfectos */
+        align-items: center !important;
+        padding: 20px 10px !important;    /* Ajustamos paddings para ganar espacio vertical y horizontal */
+        height: auto !important;          /* Deja que respire el contenedor */
+        min-height: 110px !important;     /* Altura fija y elegante ideal para horizontal */
+        overflow: visible !important;
+        margin-top: 35px !important;
+        animation: none !important;       /* Desactivamos la escala agresiva que empalmaba los bloques */
     }
 
-    .countdown .time{
-        width:90%;
-        max-width:260px;
-        display: flex;
-        flex-direction:row;
-        justify-content:space-between;
-        align-items:center;
-        padding:6px 10px;
-        margin: 0;
+    /* CALIBRACIÓN DE CADA CUADRO DE TIEMPO */
+    .countdown .time {
+        display: block !important;
+        flex: 1 !important;               /* Hace que las 4 cajas tengan exactamente el mismo ancho */
+        max-width: 70px !important;       /* Evita que se ensanchen de más en pantallas medianas */
+        margin: 0 4px !important;         /* Separación uniforme entre cada bloque */
+        padding: 8px 4px !important;      /* Espaciado interno compacto */
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(254, 240, 138, 0.15) !important;
+        text-align: center !important;
     }
 
-    .countdown .number{
-        font-size:50px; 
+    /* REDUCCIÓN DE TIPOGRAFÍA PARA QUE EN CAJA HORIZONTAL */
+    .countdown .number {
+        font-size: 26px !important;       /* Tamaño optimizado para que entren los 2 dígitos sin romperse */
+        display: block !important;
+        line-height: 1.1 !important;
+        font-weight: 700 !important;
+        width: 100% !important;
+        -webkit-background-clip: text !important;
+        background-clip: text !important;
+        -webkit-text-fill-color: transparent !important;
     }
 
-    .countdown .label{
-        font-size:14px;
-        margin-top:0;
-        letter-spacing:1px;
+    .countdown .label {
+        font-size: 10px !important;       /* Texto de "Días", "Horas" más sutil y compacto */
+        display: block !important;
+        margin-top: 4px !important;
+        letter-spacing: 0.5px !important; /* Ajuste de letras para evitar desbordes */
+        color: #fff6d6 !important;
+        text-transform: uppercase;
+    }
+
+    /* Ajuste para mantener la estrella arriba pero bien arrinconada a la derecha */
+    .countdown::after {
+        content: "✨" !important;
+        font-size: 22px !important;
+        top: 8px !important;
+        bottom: auto !important;
+        right: 8px !important;
+        position: absolute !important;
     }
     
     .event-info {
@@ -810,41 +864,34 @@ button:hover{
 <div class="sky"></div>
 <canvas id="stars"></canvas>
 
-<!-- MARIPOSA DE INTRO DORADA MAJESTUOSA -->
 <div class="intro-butterfly-container">
   <div class="intro-butterfly">🦋</div>
 </div>
 
-<!-- MARIPOSAS AMBIENTALES -->
 <div class="butterfly" style="left:12%">🦋</div>
 <div class="butterfly" style="left:78%; animation-delay:6s">🦋</div>
 
-<!-- HERO -->
 <div class="hero">
   <span class="intro-tag">Mis XV Años</span>
   <h1>DANNA</h1>
   <p>Había una vez… una noche escrita entre estrellas ✨</p>
   
-  <!-- BOTÓN LUXURY INTERACTIVO -->
   <div class="start-button-container" id="btnContainer">
     <button class="luxury-btn" onclick="revealContent(event)">Ingresar</button>
     <div class="arrow-indicator">▼</div>
   </div>
 
-  <!-- SECCIÓN INTERMEDIA: CARTA DE BIENVENIDA MÁGICA -->
   <div class="welcome-scroll-section" id="welcomeSection">
     <h2>✨ Una Invitación Real ✨</h2>
     <p>¡Bienvenidos al Reino Encantado! Quedas cordialmente invitado a formar parte de una noche mágica e inolvidable donde los sueños cobran vida propia.</p>
     <div class="scroll-down-notice">Desliza para ver más magia ▼</div>
   </div>
 
-  <!-- CONTADOR ORIGINAL DELUXE RESTAURADO -->
   <div class="countdown" id="countdown"></div>
 </div>
 
 <div class="container" id="mainContent">
 
-  <!-- CAPÍTULO I -->
   <div class="book" id="capitulo1">
     <h2>✨ Capítulo I — El Gran Día ✨</h2>
 
@@ -852,30 +899,29 @@ button:hover{
         <div class="event-card">
             <div class="icon">MXXVI</div>
             <h3>Fecha</h3>
-            <p>15 Agosto 2026</p>
+            <p>25 de Julio 2026</p>
         </div>
 
         <div class="event-card">
-            <div class="icon">✧ VII</div>
+            <div class="icon">✧ IX</div>
             <h3>Hora</h3>
-            <p>7:00 PM</p>
+            <p>9:00 PM</p>
         </div>
 
         <div class="event-card">
             <div class="icon">✨</div>
             <h3>Vestimenta</h3>
-            <p>Elegancia de cuento</p>
+            <p>Elegancia de cuento (Formal) </p>
         </div>
 
         <div class="event-card">
             <div class="icon">🏰</div>
             <h3>Lugar</h3>
-            <p>Salón Los Jardines</p>
+            <p>La Calafia</p>
         </div>
     </div>
   </div>
 
-  <!-- CAPÍTULO II -->
   <div class="book">
     <h2>🏰 Capítulo II — El Camino hacia el Castillo</h2>
     <p class="story-text">
@@ -893,26 +939,51 @@ button:hover{
     </div>
 
     <a class="magic-button"
-       href="https://maps.app.goo.gl/zjbscKkkAmCYaNzo8"
+       href="https://maps.app.goo.gl/5kKVPhiHdzWsRWUDA"
        target="_blank">
         ✨ Abrir Ruta en Google Maps
     </a>
   </div>
 
-  <!-- CAPÍTULO III -->
   <div class="book">
-    <h2>🌙 Capítulo III — Recuerdos Mágicos</h2>
-    <div class="grid">
-      <img src="https://picsum.photos/400/500?random=1" alt="Recuerdo 1">
-      <img src="https://picsum.photos/400/500?random=2" alt="Recuerdo 2">
-      <img src="https://picsum.photos/400/500?random=3" alt="Recuerdo 3">
-      <img src="https://picsum.photos/400/500?random=4" alt="Recuerdo 4">
+    <h2>🕊️ Capítulo III — La Bendición Celestial</h2>
+    <p class="story-text">
+        Antes de celebrar, daremos gracias bajo el cobijo del creador por este hermoso viaje de quince años. Acompáñanos a encender una luz de fe.
+    </p>
+
+    <div class="event-info">
+        <div class="event-card">
+          <div class="icon">✧ VII</div>
+          <h3>Hora de la Misa</h3>
+          <p>7:00 PM</p>
+        </div>
+
+    <a href="https://maps.app.goo.gl/pAh62WZ9Vo8HJBGV8" target="_blank" rel="noopener noreferrer" class="event-link">
+        <div class="event-card">
+            <div class="icon">⛪</div>
+            <h3>Santuario</h3>
+            <p style="padding-bottom: 3px;">Parroquia de la Sagrada Familia</p>
+             
+            Ver ubicación
+        </div>
+    </a>
     </div>
   </div>
 
-  <!-- CAPÍTULO IV — CÓDIGO DE COLORES REALES CON TU AZUL #272F7A LIMPIO -->
   <div class="book">
-    <h2>✨ Capítulo IV — El Decreto de la Corte ✨</h2>
+    <h2>🌙 Capítulo IV — Recuerdos Mágicos</h2>
+    <div class="grid">
+      <img src="XVAÑOS1.jpeg" alt="Recuerdo 1">
+      <img src="XVAÑOS2.jpeg" alt="Recuerdo 2">
+      <img src="XVAÑOS3.jpeg" alt="Recuerdo 3">
+      <img src="XVAÑOS4.jpeg" alt="Recuerdo 4">
+      <img src="XVAÑOS5.jpeg" alt="Recuerdo 5">
+      <img src="XVAÑOS6.jpeg" alt="Recuerdo 6">
+    </div>
+  </div>
+
+  <div class="book">
+    <h2>✨ Capítulo V — El Decreto de la Corte ✨</h2>
     <p class="story-text">
         Para mantener la armonía cromática de este cuento de hadas, la corte real ha dictado el siguiente protocolo de vestimenta:
     </p>
@@ -928,18 +999,53 @@ button:hover{
             <h3>Traje Azul Real</h3>
             <p>El uso de trajes en esta tonalidad de azul está reservado **únicamente para los caballeros de la familia** directa de la quinceañera.</p>
         </div>
+
+        <div class="code-card" style="color: #00a86b;">
+            <div class="color-circle" style="background-color: #00a86b;"></div>
+            <h3>Tono Verde Jade</h3>
+            <p>Esta distinguida tonalidad de verde está reservada **únicamente para las damas de la familia** de la quinceañera.</p>
+        </div>
     </div>
   </div>
 
-  <!-- CAPÍTULO V -->
   <div class="book">
-    <h2>💌 Capítulo V — Confirmación del Reino</h2>
-    <form onsubmit="rsvp(event)">
-      <input placeholder="Nombre del invitado" required>
-      <input type="number" placeholder="Acompañantes" required>
-      <textarea placeholder="Mensaje mágico (opcional)" rows="3"></textarea>
-      <button type="submit">Confirmar asistencia ✨</button>
-    </form>
+    <h2>✨ Capítulo VI — El Cofre de los Deseos ✨</h2>
+    <p class="story-text">
+        Si deseas concederle un don o un presente a nuestra Quinceañera para ayudarla a escribir los próximos capítulos de su historia, en el salón encontrarás un <b>Buzón Real</b> destinado a recibir tus sobres con muestras de afecto y bendiciones en efectivo.
+    </p>
+
+    <div class="event-info" style="justify-content: center; max-width: 500px; margin: 25px auto 0 auto;">
+        <div class="event-card" style="cursor: default;">
+            <div class="icon" style="font-size: 40px;">✉️✨</div>
+            <h3>Modalidad</h3>
+            <p>Lluvia de Sobres / Buzón de Dinero</p>
+            <span style="font-size: 13px; color: #fff6d6; margin-top: 10px; display: block; font-style: italic;">
+                "Tu presencia es nuestro mayor regalo, pero si deseas hacernos un presente, este será bien recibido."
+            </span>
+        </div>
+    </div>
+  </div>
+
+<!-- CAPÍTULO VII — CONFIRMACIÓN CON QR OPTIMIZADO -->
+  <div class="book">
+    <h2>💌 Capítulo VII — Confirmación del Reino</h2>
+    
+    <!-- QR con tamaño controlado, centrado y estilizado -->
+    <img src="QR.png" alt="QRCODE" style="
+        display: block;
+        width: 100%;
+        max-width: 220px;          /* Limita el tamaño para que no sea gigante */
+        margin: 25px auto;         /* Lo centra perfectamente y le da espacio arriba/abajo */
+        border-radius: 15px;       /* Esquinas suaves a tono con los libros */
+        border: 2px solid rgba(254, 240, 138, 0.2); /* Ribete sutil dorado */
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);  /* Sombra elegante */
+    ">
+
+    <a class="magic-button"
+       href="https://forms.office.com/r/XeY3S5PsYF?origin=lprLink"
+       target="_blank">
+        Confirmar asistencia ✨
+    </a>
   </div>
 
 </div>
@@ -1026,7 +1132,7 @@ function triggerIntroSparkles() {
 setTimeout(triggerIntroSparkles, 1200);
 
 /* COUNTDOWN ORIGINAL DE ALTA PRECISIÓN */
-const eventDate = new Date("August 15, 2026 19:00:00").getTime();
+const eventDate = new Date("July 25, 2026 21:00:00").getTime();
 
 function updateCountdown() {
   let now = new Date().getTime();
@@ -1042,11 +1148,12 @@ function updateCountdown() {
   let m = Math.floor((diff%(1000*60*60))/(1000*60));
   let s = Math.floor((diff%(1000*60))/1000);
 
+  // Mantenemos los divs limpios para evitar errores en móviles
   document.getElementById("countdown").innerHTML = `
-    <div class="time"><span class="number">${d}</span><span class="label">Días</span></div>
-    <div class="time"><span class="number">${h}</span><span class="label">Horas</span></div>
-    <div class="time"><span class="number">${m}</span><span class="label">Minutos</span></div>
-    <div class="time"><span class="number">${s}</span><span class="label">Segundos</span></div>
+    <div class="time"><div class="number">${d}</div><div class="label">Días</div></div>
+    <div class="time"><div class="number">${h}</div><div class="label">Horas</div></div>
+    <div class="time"><div class="number">${m}</div><div class="label">Minutos</div></div>
+    <div class="time"><div class="number">${s}</div><div class="label">Segundos</div></div>
   `;
 }
 setInterval(updateCountdown, 1000);
